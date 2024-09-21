@@ -70,10 +70,13 @@ GROUP BY distinct_employee.department_name
 
 
 -- bai 10
-SELECT *
+SELECT  e.name, d.department_name , count(p.project_name) 
 FROM employees e 
 JOIN employee_projects ep ON e.employee_id = ep.employee_id
 JOIN departments d ON e.department_id = d.department_id 
--- GROUP 
+JOIN projects p ON p.project_id = ep.project_id 
+GROUP BY e.name, d.department_name
+HAVING  count(p.project_name)  >= 1
+
 
 
