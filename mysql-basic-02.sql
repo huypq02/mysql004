@@ -58,20 +58,15 @@ GROUP BY p.project_name
 ORDER BY number_of_employees desc
 
 -- bai 9
-SELECT p.project_name, count(e.name) number_of_employees
-FROM employees e
-JOIN employee_projects ep ON e.employee_id = ep.employee_id
-JOIN projects p on p.project_id = ep.project_id 
-
--- SELECT *
--- FROM departments d
-SELECT d.department_name, AVG(e.salary) 
-FROM employees e 
-JOIN departments d ON e.department_id = d.department_id 
-JOIN employee_projects ep ON e.employee_id = ep.employee_id
--- JOIN projects p ON ep.project_id = p.project_id
-GROUP BY d.department_name
--- HAVING e.employee_id > 1
+SELECT distinct_employee.department_name, AVG(distinct_employee.salary) 
+FROM (
+	SELECT 	e.name, e.salary, d.department_name
+	FROM employees e 
+	JOIN departments d ON e.department_id = d.department_id 
+	JOIN employee_projects ep ON e.employee_id = ep.employee_id
+	GROUP BY e.name, e.salary, d.department_name
+) as distinct_employee
+GROUP BY distinct_employee.department_name
 
 
 -- bai 10
